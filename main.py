@@ -1,9 +1,10 @@
 from flask import Flask, request
-import requests
+import requests, os
 
 app = Flask(__name__)
 
-TOKEN = "8331188037:AAHczNrYr_JyADC80Aj2BuOrr47wAcYFY24"  
+# Environment Variable Key ကို BOT_TOKEN လို့ သုံးပါမည်
+TOKEN = os.getenv("BOT_TOKEN")  
 URL = f"https://api.telegram.org/bot{TOKEN}"
 
 @app.route('/')
@@ -23,7 +24,6 @@ def webhook():
 
     return '', 200
 
-
-if __name__ == '__main__':
-  
-    app.run(host='0.0.0.0', port=5000)
+# Production (Render) မှာ Gunicorn ကို အသုံးပြုပါမည်။
+# Gunicorn သည် Flask app object ကို အလိုအလျောက် ရှာဖွေပြီး Run ပါမည်။
+# Local run အတွက် လိုအပ်သော if __name__ == '__main__': အပိုင်းကို ချန်လှပ်ထားပါသည်။
